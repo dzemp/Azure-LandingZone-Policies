@@ -1,0 +1,27 @@
+{
+    "properties": {
+        "displayName": "Audit if Application Gateway WAF is configured with Prevention mode",
+        "mode": "All",
+        "description": "Audit if the Application Gateway WAF is not configured with Prevention mode.",
+        "parameters": {},
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Network/applicationGateways"
+                    },
+                    {
+                        "not": {
+                            "field": "Microsoft.Network/applicationGateways/webApplicationFirewallConfiguration.firewallMode",
+                            "equals": "Prevention"
+                        }
+                    }
+                ]
+            },
+            "then": {
+                "effect": "deny"
+            }
+        }
+    }
+}
