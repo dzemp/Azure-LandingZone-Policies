@@ -2,7 +2,6 @@
     "properties": {
         "displayName": "Audit if the latest Azure Application Gateway WAF Core Rule Set is used",
         "description": "Audit if the latest available OWASP ModSecurity Core Rule Set is not configured on the Azure Application Gateway WAF.",
-        "policyType": "Custom",
         "mode": "All",
         "parameters": {
             "coreRuleSetVersion": {
