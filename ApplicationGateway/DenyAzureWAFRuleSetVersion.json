@@ -1,0 +1,35 @@
+{
+  "properties": {
+    "displayName": "The latest Application Gateway WAF Core Rule Set must be used",
+    "mode": "All",
+    "description": "Deny an operation when not the lastest available Application Gateway WAF rule set is selected. The rule set must be 3.1.",
+    "parameters": {
+      "coreRuleSetVersion": {
+        "type": "String",
+        "metadata": {
+          "description": "The version of the OWASP ModSecurity Core Rule Set",
+          "displayName": "OWASP ModSecurity Core Rule Set version"
+        }
+      },
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Network/applicationGateways"
+            },
+            {
+              "not": {
+                "field": "Microsoft.Network/applicationGateways/webApplicationFirewallConfiguration.ruleSetVersion",
+                "equals": "[parameters('coreRuleSetVersion')]"
+              }
+            }
+          ]
+        },
+        "then": {
+          "effect": "deny"
+        }
+      }
+    }
+  }
+}
