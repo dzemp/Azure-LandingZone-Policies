@@ -1,0 +1,27 @@
+{
+    "properties": {
+        "displayName": "Application Gateway WAF must be configured with Prevention mode",
+        "mode": "All",
+        "description": "Deny an operation when the Application Gateway WAF mode is not set to Prevention",
+        "parameters": {},
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Network/applicationGateways"
+                    },
+                    {
+                        "not": {
+                            "field": "Microsoft.Network/applicationGateways/webApplicationFirewallConfiguration.firewallMode",
+                            "equals": "Prevention"
+                        }
+                    }
+                ]
+            },
+            "then": {
+                "effect": "deny"
+            }
+        }
+    }
+}
