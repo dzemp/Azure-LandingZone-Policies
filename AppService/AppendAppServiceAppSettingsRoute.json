@@ -1,0 +1,30 @@
+{
+    "properties": {
+        "displayName": "Append WEBSITE_VNET_ROUTE_ALL to the App Service application settings",
+        "description": "Append the setting WEBSITE_VNET_ROUTE_ALL with value 1 to the App Service application settings, to route all outbound traffic through the virtual network",
+        "mode": "All",
+        "parameters": {},
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Web/sites"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "append",
+                "details": [
+                    {
+                        "field": "Microsoft.Web/sites/siteConfig.appSettings[*]",
+                        "value": {
+                            "name": "WEBSITE_VNET_ROUTE_ALL",
+                            "value": "1"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
