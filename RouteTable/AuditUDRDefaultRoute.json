@@ -1,0 +1,49 @@
+{
+    "properties": {
+        "displayName": "Audit if default route 0.0.0.0/0 with next hop VirtualAppliance is not included",
+        "description": "Audit if the default route 0.0.0.0/0 with next hop VirtualAppliance is not included in the User Defined Route (UDR)",
+        "mode": "All",
+        "parameters": {
+            "nvaIPAddress": {
+                "type": "String",
+                "metadata": {
+                    "displayName": "IP address of the virtual appliance",
+                    "description": "The IP address of the target Network Virtual Appliance (NVA) or Azure Firewall."
+                },
+                "defaultValue": "192.168.1.1"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Network/routeTables"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "auditIfNotExists",
+                "details": {
+                    "type": "Microsoft.Network/routeTables/routes",
+                    "existenceCondition": {
+                        "allOf": [
+                            {
+                                "field": "Microsoft.Network/routeTables/routes/addressPrefix",
+                                "equals": "0.0.0.0/0"
+                            },
+                            {
+                                "field": "Microsoft.Network/routeTables/routes/nextHopType",
+                                "equals": "VirtualAppliance"
+                            },
+                            {
+                                "field": "Microsoft.Network/routeTables/routes/nextHopIpAddress",
+                                "equals": "[parameters('nvaIPAddress')]"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
