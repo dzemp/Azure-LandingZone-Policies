@@ -1,0 +1,27 @@
+{
+    "properties": {
+        "displayName": "Audit if Azure Application Gateway WAF is enabled",
+        "description": "Audit if the Azure Application Gateway WAF is not enabled",
+        "mode": "All",
+        "parameters": {},
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Network/applicationGateways"
+                    },
+                    {
+                        "not": {
+                            "field": "Microsoft.Network/applicationGateways/webApplicationFirewallConfiguration.enabled",
+                            "equals": "True"
+                        }
+                    }
+                ]
+            },
+            "then": {
+                "effect": "audit"
+            }
+        }
+    }
+}
